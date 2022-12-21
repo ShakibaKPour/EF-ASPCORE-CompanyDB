@@ -30,9 +30,8 @@ namespace Company.API.Controllers
 
         // POST api/<EmployeeTitleController>
         [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        //public async Task<IResult> Post([FromBody] EmployeeTitleDTO dto) =>
+        //    await _db.HttpPostAsync<EmployeeTitle, EmployeeTitleDTO>(dto);
 
         // PUT api/<EmployeeTitleController>/5
         [HttpPut("{id}")]
@@ -41,6 +40,9 @@ namespace Company.API.Controllers
         }
 
         // DELETE api/<EmployeeTitleController>/5
+        [HttpDelete("{id}")]
+        public async Task<IResult> DeleteAsync(EmployeeTitleDTO dto)
+            => await _db.HttpDeleteAsync<EmployeeTitle, EmployeeTitleDTO>(dto);
         
 
     }

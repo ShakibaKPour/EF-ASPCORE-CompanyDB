@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Company.Common.DTOs;
 using Company.Data.Context;
 using Company.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Linq.Expressions;
 
 namespace Company.Data.Services;
@@ -102,7 +100,17 @@ public class DbService : IDbService
             if (entity is null) return false;
             _db.Remove(entity);
         }catch(Exception ex) { throw; }
+
         return true;
      }
+
+    public async Task<TReferenceEntity> AddReferenceEntityAsync<TReferenceEntity, TDto>(TDto dto)
+        where TReferenceEntity : class, IReferenceEntity
+        where TDto : class
+    {
+        var entity = _mapper.Map<TReferenceEntity>(dto);
+        await _db.Set<TReferenceEntity>().AddAsync(entity);
+        return entity;
+    }
 }
 

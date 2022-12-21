@@ -2,7 +2,13 @@
 
 public class EmployeeTitleDTO
 {
-    public int EmployeeId { get; set; }
+    public int EmployeeId { get; set; } = default;
 
-    public int TitleId { get; set; }
+    public int TitleId { get; set; }= default;
+
+    public EmployeeTitleDTO(int employeeId, int titleId)
+    {
+        EmployeeId = employeeId;
+        TitleId = titleId;
+    }
 }

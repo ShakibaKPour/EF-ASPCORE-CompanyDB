@@ -30,6 +30,10 @@ public interface IDbService
         where TReferenceEntity: class, IReferenceEntity
         where TDto : class;
 
+    Task<TReferenceEntity> AddReferenceEntityAsync<TReferenceEntity, TDto>(TDto dto)
+        where TReferenceEntity : class, IReferenceEntity
+        where TDto : class;
+
     Task<bool> SaveChangeAsync();
 
     public string GetURI<TEntity>(TEntity entity)

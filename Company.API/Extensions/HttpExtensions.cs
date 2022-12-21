@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using System.Runtime.CompilerServices;
-
-namespace Company.API.Extensions;
+﻿namespace Company.API.Extensions;
 
 public static class HttpExtensions
 {
@@ -14,7 +11,7 @@ public static class HttpExtensions
         {
             var entities = await db.GetAsync<TEntity, TDto>();
             return Results.Ok(entities);
-        } catch(Exception ex) { throw;  }
+        }   catch(Exception ex) { throw;  }
         
     }
 
@@ -92,4 +89,44 @@ public static class HttpExtensions
         return Results.BadRequest(); 
 
     }
+
+    public static async Task<IResult> HttpDeleteAsync<TReferenceEntity, TDto>(this IDbService  db, TDto dto)
+        where TReferenceEntity : class, IReferenceEntity
+        where TDto : class
+    {
+        try
+        {
+            if (!db.Delete<TReferenceEntity, TDto>(dto)) return Results.NotFound();
+            if (await db.SaveChangeAsync())
+                return Results.NoContent();
+        }
+        catch (Exception ex)
+        {
+            return Results.BadRequest();
+        }
+        return Results.BadRequest();
+    }
+
+    //public static async Task<IResult> HttpAddReferenceEntityAsync<TReferenceEntity, TDto>(this IDbService db, TDto dto, Mapper mapper)
+    //    where TReferenceEntity : class, IReferenceEntity
+    //    where TDto : class
+    //{
+    //    try
+    //    {
+    //        if (dto is null) return Results.BadRequest();
+    //        var refEntity = mapper.Map<TReferenceEntity>(dto);
+    //        await db.Set<TReferenceEntity>().Add(refEntity);
+    //        return refEntity;
+    //        if (await db.SaveChangeAsync())
+    //        {
+    //            return Results.Ok(refEntity);
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        throw;
+    //    }
+    //    return Results.BadRequest();
+
+    //}
 }
