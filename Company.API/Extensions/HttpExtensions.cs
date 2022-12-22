@@ -12,8 +12,9 @@ public static class HttpExtensions
             var entities = await db.GetAsync<TEntity, TDto>();
             return Results.Ok(entities);
         }
-        catch (Exception ex) { throw; }
+        catch { }
 
+        return Results.BadRequest();
     }
 
     public static async Task<IResult> HttpGetAsync<TEntity, TDto>(this IDbService db, int id)
@@ -26,7 +27,9 @@ public static class HttpExtensions
             if (entity == null) return Results.BadRequest();
             return Results.Ok(entity);
         }
-        catch (Exception ex) { throw; }
+        catch { }
+
+        return Results.BadRequest();
     }
 
     public static async Task<IResult> HttpPostAsync<TEntity, TDto>(this IDbService db, TDto dto)
@@ -43,10 +46,8 @@ public static class HttpExtensions
                 return Results.Created(Uri, entity);
             }
         }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        catch { }
+
         return Results.BadRequest();
     }
 
@@ -65,10 +66,8 @@ public static class HttpExtensions
             if (await db.SaveChangeAsync())
                 return Results.NoContent();
         }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        catch { }
+
         return Results.BadRequest();
     }
 
@@ -87,10 +86,8 @@ public static class HttpExtensions
                 return Results.NoContent();
 
         }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        catch { }
+
         return Results.BadRequest();
 
     }
@@ -105,10 +102,8 @@ public static class HttpExtensions
             if (await db.SaveChangeAsync())
                 return Results.NoContent();
         }
-        catch (Exception ex)
-        {
-            return Results.BadRequest();
-        }
+        catch { }
+
         return Results.BadRequest();
     }
 
@@ -122,10 +117,8 @@ public static class HttpExtensions
             var entity = await db.AddReferenceAsync<TEntity, TDto>(dto);
             if (await db.SaveChangeAsync()) return Results.NoContent();
         }
-        catch (Exception ex)
-        {
-            return Results.BadRequest();
-        }
+        catch { }
+
         return Results.BadRequest();
 
     }
