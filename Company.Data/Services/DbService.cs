@@ -83,7 +83,8 @@ public class DbService : IDbService
             var entity = await SingleAsync<TEntity>(e => e.Id.Equals(id));
             if (entity is null) return false;
             _db.Remove(entity);
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             throw;
         }
@@ -99,17 +100,18 @@ public class DbService : IDbService
             var entity = _mapper.Map<TReferenceEntity>(dto);
             if (entity is null) return false;
             _db.Remove(entity);
-        }catch(Exception ex) { throw; }
+        }
+        catch (Exception ex) { throw; }
 
         return true;
-     }
+    }
 
-    public async Task<TReferenceEntity> AddReferenceEntityAsync<TReferenceEntity, TDto>(TDto dto)
-        where TReferenceEntity : class, IReferenceEntity
+    public async Task<TEntity> AddReferenceAsync<TEntity, TDto>(TDto dto)
+        where TEntity : class, IReferenceEntity
         where TDto : class
     {
-        var entity = _mapper.Map<TReferenceEntity>(dto);
-        await _db.Set<TReferenceEntity>().AddAsync(entity);
+        var entity = _mapper.Map<TEntity>(dto);
+        await _db.Set<TEntity>().AddAsync(entity);
         return entity;
     }
 }

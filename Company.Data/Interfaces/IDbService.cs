@@ -26,17 +26,17 @@ public interface IDbService
     Task<bool> DeleteAsync<TEntity>(int id)
         where TEntity : class, IEntity;
 
-    bool Delete<TReferenceEntity, TDto>(TDto dto)
-        where TReferenceEntity: class, IReferenceEntity
+    Task<TEntity> AddReferenceAsync<TEntity, TDto>(TDto dto)
+        where TEntity : class, IReferenceEntity
         where TDto : class;
 
-    Task<TReferenceEntity> AddReferenceEntityAsync<TReferenceEntity, TDto>(TDto dto)
-        where TReferenceEntity : class, IReferenceEntity
+    bool Delete<TReferenceEntity, TDto>(TDto dto)
+        where TReferenceEntity: class, IReferenceEntity
         where TDto : class;
 
     Task<bool> SaveChangeAsync();
 
     public string GetURI<TEntity>(TEntity entity)
-        where TEntity : class, IEntity;   
-
+        where TEntity : class, IEntity;
+    
 }

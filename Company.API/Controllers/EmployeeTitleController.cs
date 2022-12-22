@@ -14,30 +14,11 @@ namespace Company.API.Controllers
         {
             _db = db;
         }
-        // GET: api/<EmployeeTitleController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<EmployeeTitleController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST api/<EmployeeTitleController>
         [HttpPost]
-        //public async Task<IResult> Post([FromBody] EmployeeTitleDTO dto) =>
-        //    await _db.HttpPostAsync<EmployeeTitle, EmployeeTitleDTO>(dto);
-
-        // PUT api/<EmployeeTitleController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        public async Task<IResult> Post([FromBody] EmployeeTitleDTO dto) =>
+            await _db.HttpAddReferenceAsync<EmployeeTitle, EmployeeTitleDTO>(dto);
 
         // DELETE api/<EmployeeTitleController>/5
         [HttpDelete("{id}")]
